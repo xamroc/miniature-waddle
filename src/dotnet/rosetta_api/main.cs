@@ -103,26 +103,9 @@ namespace PRoschke_ExcelTest3
 						dynamic d = JObject.Parse(fromClientMessage);
 
 						if (d != null)
-						{
-							Console.WriteLine("d exists");
-							Console.WriteLine(d.ss);
-							Console.WriteLine(isPricer);
-							
-							if (d.ss != null && !isPricer && d.ss == "pricer.xlsm") {
-								Console.WriteLine("overwrite pricer");
-								FileStream ifs2 = new FileStream("/tmp/spreadsheets/pricer.xlsm", FileMode.Open);
-								XLO = new XLObj()
-								{
-									FileName = Regex.Match("/tmp/spreadsheets/pricer.xlsm", @"(/|\\)?(?<fileName>[^(/|\\)]+)$").Groups["fileName"].ToString(),   // to trim off whole path from browsers like IE
-									MimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-									Data = Helper.ReadFully(ifs2, 0)
-								};
-								isPricer = true;
-							}
-
+						{	
 							dynamic inputs = d.input.data;
 
-							Console.WriteLine(d.input);
 							if (inputs == null)
 							{
 								Exception e = new Exception("No inputs override found for JSON override");
@@ -148,7 +131,6 @@ namespace PRoschke_ExcelTest3
 								}
 								else
 								{
-									// Console.WriteLine("[{0}] Replace value {1} with {2}", name, xiSpreadsheet.Value, value);
 									xiSpreadsheet.Value = value;
 								}
 							}

@@ -6,7 +6,7 @@ RUN apt-get -qq update
 RUN apt-get install -y libtool pkg-config build-essential autoconf automake git wget
 RUN apt-get install -y libzmq-dev
 
-COPY src/libsodium /libsodium
+COPY build/libsodium /libsodium
 RUN cd libsodium && \
 	./autogen.sh && \
 	./configure && make check && \
@@ -24,15 +24,15 @@ RUN wget https://github.com/zeromq/libzmq/releases/download/v4.2.0/zeromq-4.2.0.
 # Calc engine setup
 ENV CALCCORE_DIR=/opt/calc-core
 RUN mkdir -p ${CALCCORE_DIR}
-ADD src/monosrc/hsecedotnet ${CALCCORE_DIR}
-ADD src/monosrc/tools ${CALCCORE_DIR}/tools
 WORKDIR ${CALCCORE_DIR}
 
-RUN mono ${CALCCORE_DIR}/tools/nuget.exe install Microsoft.AspNet.Web.Optimization
-RUN mono ${CALCCORE_DIR}/tools/nuget.exe install NetMQ
-
 # Vendor DLL installs
-RUN gacutil -i ${CALCCORE_DIR}/Newtonsoft.Json.5.0.4/lib/net40/Newtonsoft.Json.dll
+COPY src/dotnet/packages/NetMQ.3.3.3.4/lib/net40/NetMQ.dll ${CALCCORE_DIR}/NetMQ.dll
+COPY src/dotnet/packages/Newtonsoft.Json.9.0.1/lib/net40/Newtonsoft.Json.dll ${CALCCORE_DIR}/Newtonsoft.Json.dll
+COPY src/dotnet/packages/AsyncIO.0.1.20.0/lib/net40/AsyncIO.dll ${CALCCORE_DIR}/AsyncIO.dll
+COPY src/dotnet/rosetta_api/spreadsheet-gear/*.dll ${CALCCORE_DIR}/
+
+RUN gacutil -i ${CALCCORE_DIR}/Newtonsoft.Json.dll
 
 # NodeJS setup
 RUN \
@@ -51,18 +51,21 @@ RUN \
 
 RUN \
   mkdir -p ${APP_DIR} && \
-  mkdir -p /tmp/spreadsheets && \
-  mkdir -p /tmp/testbeds && \
+  mkdir -p /tmp/uploads && \
+  mkdir -p /tmp/data && \
   cp -a /tmp/node_modules/ ${APP_DIR}
 
-RUN mcs -out:${CALCCORE_DIR}/ssg-test.exe ${CALCCORE_DIR}/*.cs -r:System.Drawing.dll -r:${CALCCORE_DIR}/SpreadsheetGear2012.Core.dll -r:${CALCCORE_DIR}/SpreadsheetGear2012.Drawing.dll -r:${CALCCORE_DIR}/Newtonsoft.Json.5.0.4/lib/net40/Newtonsoft.Json.dll -r:System.Data.dll -r:${CALCCORE_DIR}/NetMQ.3.3.3.4/lib/net40/NetMQ.dll
+# C# source
+COPY src/dotnet/rosetta_api/*.cs ${CALCCORE_DIR}/
+
+RUN mcs -out:${CALCCORE_DIR}/rosetta-api.exe ${CALCCORE_DIR}/*.cs -r:System.Drawing.dll -r:${CALCCORE_DIR}/SpreadsheetGear2012.Core.dll -r:${CALCCORE_DIR}/SpreadsheetGear2012.Drawing.dll -r:${CALCCORE_DIR}/Newtonsoft.Json.dll -r:System.Data.dll -r:${CALCCORE_DIR}/NetMQ.dll
 
 # HTTP Application setup
 COPY src/node/controllers ${APP_DIR}/controllers
 COPY src/node/config.js ${APP_DIR}/config.js
 COPY src/node/index.js ${APP_DIR}/index.js
 COPY build/start.sh ${APP_DIR}/start.sh
-COPY src/node/uploads /tmp/uploads
+COPY src/node/uploads/Testfilev2.xlsx /tmp/uploads/Testfilev2.xlsx
 COPY src/node/data /tmp/data
 
 WORKDIR ${CALCCORE_DIR}
