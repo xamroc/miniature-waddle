@@ -1,0 +1,28 @@
+{
+  "name": "rosetta-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "koa": "^1.2.4",
+    "koa-formidable": "^1.0.0",
+    "koa-json-logger": "^1.0.2",
+    "koa-router": "^5.4.0",
+    "lodash": "^4.16.4",
+    "moment": "^2.15.2",
+    "nconf": "^0.8.4",
+    "node-json-transform": "^1.0.10",
+    "q-io": "^1.13.2",
+    "zmq": "^2.15.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}

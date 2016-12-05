@@ -1,0 +1,7 @@
+node_modules
+src/dotnet/rosetta_api/bin
+src/dotnet/rosetta_api/obj
+src/dotnet/rosetta_api/*.mdb
+*.userprefs
+*.user
+src/dotnet/packages

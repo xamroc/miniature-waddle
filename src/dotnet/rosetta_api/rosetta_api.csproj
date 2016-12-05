@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{BD1C3FA9-09A2-450C-82E5-44FAE11C0AB9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>PRoschke_ExcelTest3</RootNamespace>
+    <AssemblyName>hsecedotnet</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="SpreadsheetGear2012.Core">
+      <HintPath>SpreadsheetGear2012.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetGear2012.Drawing">
+      <HintPath>SpreadsheetGear2012.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetGear2012.Windows.Forms">
+      <HintPath>SpreadsheetGear2012.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetGear2012.Windows.Forms.Integration">
+      <HintPath>SpreadsheetGear2012.Windows.Forms.Integration.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetGear2012.Windows.WPF">
+      <HintPath>SpreadsheetGear2012.Windows.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="AsyncIO">
+      <HintPath>..\packages\AsyncIO.0.1.20.0\lib\net40\AsyncIO.dll</HintPath>
+    </Reference>
+    <Reference Include="NetMQ">
+      <HintPath>..\packages\NetMQ.3.3.3.4\lib\net40\NetMQ.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="main.cs" />
+    <Compile Include="SupportClasses.cs" />
+    <Compile Include="XInput.cs" />
+    <Compile Include="XLObj.cs" />
+    <Compile Include="XLog.cs" />
+    <Compile Include="XLTest.cs" />
+    <Compile Include="XOutput.cs" />
+    <Compile Include="mono.options.cs" />
+    <Compile Include="InputOverrides.cs" />
+    <Compile Include="ProcessResult.cs" />
+    <Compile Include="ProcessError.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SpreadsheetGear2012.Core.dll" />
+    <EmbeddedResource Include="SpreadsheetGear2012.Drawing.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
