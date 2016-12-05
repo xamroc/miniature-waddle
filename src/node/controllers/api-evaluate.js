@@ -15,7 +15,7 @@ module.exports = function * () {
 
   try {
     let results = yield new Promise(resolve => {
-      reqSock.on('message', function(msg) { console.log(msg); resolve(JSON.parse(msg)) })
+      reqSock.on('message', function(msg) { resolve(JSON.parse(msg)) })
       reqSock.send(JSON.stringify(inputOverride))
     })
 
