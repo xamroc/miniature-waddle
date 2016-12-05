@@ -5,8 +5,9 @@ RUN apt-get -qq update
 # ZeroMQ setup
 RUN apt-get install -y libtool pkg-config build-essential autoconf automake git wget
 RUN apt-get install -y libzmq-dev
-RUN git clone git://github.com/jedisct1/libsodium.git && \
-	cd libsodium && \
+
+COPY src/libsodium /libsodium
+RUN cd libsodium && \
 	./autogen.sh && \
 	./configure && make check && \
 	make install && \
@@ -57,22 +58,20 @@ RUN \
 RUN mcs -out:${CALCCORE_DIR}/ssg-test.exe ${CALCCORE_DIR}/*.cs -r:System.Drawing.dll -r:${CALCCORE_DIR}/SpreadsheetGear2012.Core.dll -r:${CALCCORE_DIR}/SpreadsheetGear2012.Drawing.dll -r:${CALCCORE_DIR}/Newtonsoft.Json.5.0.4/lib/net40/Newtonsoft.Json.dll -r:System.Data.dll -r:${CALCCORE_DIR}/NetMQ.3.3.3.4/lib/net40/NetMQ.dll
 
 # HTTP Application setup
-COPY controllers ${APP_DIR}/controllers
-COPY lib ${APP_DIR}/lib
-COPY uploads ${APP_DIR}/uploads
-COPY views ${APP_DIR}/views
-COPY config.js ${APP_DIR}/config.js
-COPY index.js ${APP_DIR}/index.js
-COPY start.sh ${APP_DIR}/start.sh
-COPY uploads/Testfilev2.xlsx /tmp/spreadsheets/Testfilev2.xlsx
-COPY templates/TestResultTemplate.xlsx ${CALCCORE_DIR}/TestResultTemplate.xlsx
-COPY inputs.json /tmp/inputs.json
+COPY src/node/controllers ${APP_DIR}/controllers
+COPY src/node/uploads ${APP_DIR}/uploads
+COPY src/node/config.js ${APP_DIR}/config.js
+COPY src/node/index.js ${APP_DIR}/index.js
+COPY build/start.sh ${APP_DIR}/start.sh
+COPY src/node/uploads /tmp/uploads
+COPY src/node/data /tmp/data
 
 WORKDIR ${CALCCORE_DIR}
 
 RUN chown -R www-data:www-data ${APP_DIR}
 RUN chown -R www-data:www-data ${CALCCORE_DIR}
-RUN chown -R www-data:www-data /tmp/
+RUN chown -R www-data:www-data /tmp/spreadsheets
+RUN chown -R www-data:www-data /tmp/data
 
 RUN chmod 777 ${APP_DIR}/start.sh
 
@@ -81,5 +80,5 @@ WORKDIR ${APP_DIR}
 
 EXPOSE 3000
 
-# RUN 
+# RUN
 CMD ["./start.sh"]
