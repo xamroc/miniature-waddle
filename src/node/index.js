@@ -4,8 +4,8 @@ const app = require('koa')()
 const router = require('koa-router')()
 const path = require('path')
 
-const apiDetails = require('./controllers/apiDetails')
-const apiEvaluate = require('./controllers/apiEvaluate')
+const apiDetails = require('./controllers/api-details')
+const apiEvaluate = require('./controllers/api-evaluate')
 
 const zmq = require('zmq')
 
