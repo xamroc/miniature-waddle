@@ -1,27 +1,33 @@
+This is a [Koa.js](http://koajs.com/) web server which communicates with a [Mono-based](http://www.mono-project.com/) CLI program to wrap [SpreadsheetGear](http://www.spreadsheetgear.com/) to process Excel spreadsheets in Linux. IPC is done using [ZeroMQ](http://zeromq.org).
 
-This is a [Koa.js](http://koajs.com/) web server which utilises a [Mono-based](http://www.mono-project.com/) CLI program to wrap [SpreadsheetGear](http://www.spreadsheetgear.com/) to process Excel spreadsheets in Linux.
+### Pre-requisites
+Pkg-config, libsodium and native ZeroMQ libraries might need to be installed before running this. On dev machines (Macs) you can try using `brew`:
 
-The file `hsece.swagger.yaml` defines the API interface of this web server.
-You can view it with [Swagger Editor](http://editor.swagger.io/#/).
+```
+brew install pkg-config
+brew install libsodium
+brew install zeromq
+```
 
+### How to use
 Run this via docker. e.g. 
+
 ```
 docker build -t hsce:0.1 .
 docker run -p 3000:3000 -d hsce:0.1
 ```
 
-You can upload spreadsheets and then click on the uploaded filename. 
 Nothing is persisted.
 
-*Known Issues*
-
-* Clicking on directories in the uploaded section will crash
+### Known Issues
+* **At the moment this repo only works with the embedded spreadsheet "Testfilev2.xlsx"**
 
 ### HTTP/REST JSON Requests API
 Two paths are available, details and evaluate
 
 #### Details
 Sample output for `GET http://192.168.33.100:3000/api/details`
+
 ```json
 {
   "id": "TestFilev2.xlsx",
