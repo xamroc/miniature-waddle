@@ -24,8 +24,8 @@ RUN wget https://github.com/zeromq/libzmq/releases/download/v4.2.0/zeromq-4.2.0.
 # Calc engine setup
 ENV CALCCORE_DIR=/opt/calc-core
 RUN mkdir -p ${CALCCORE_DIR}
-ADD ./monosrc/hsecedotnet ${CALCCORE_DIR}
-ADD ./monosrc/tools ${CALCCORE_DIR}/tools
+ADD src/monosrc/hsecedotnet ${CALCCORE_DIR}
+ADD src/monosrc/tools ${CALCCORE_DIR}/tools
 WORKDIR ${CALCCORE_DIR}
 
 RUN mono ${CALCCORE_DIR}/tools/nuget.exe install Microsoft.AspNet.Web.Optimization
@@ -43,7 +43,7 @@ ENV APP_DIR=/opt/calc-engine
 ENV NODE_ENV=production
 
 # NPM package cache
-COPY package.json /tmp/package.json
+COPY src/node/package.json /tmp/package.json
 RUN \
     cd /tmp && \
     npm install --production && \
@@ -59,7 +59,6 @@ RUN mcs -out:${CALCCORE_DIR}/ssg-test.exe ${CALCCORE_DIR}/*.cs -r:System.Drawing
 
 # HTTP Application setup
 COPY src/node/controllers ${APP_DIR}/controllers
-COPY src/node/uploads ${APP_DIR}/uploads
 COPY src/node/config.js ${APP_DIR}/config.js
 COPY src/node/index.js ${APP_DIR}/index.js
 COPY build/start.sh ${APP_DIR}/start.sh
@@ -70,14 +69,15 @@ WORKDIR ${CALCCORE_DIR}
 
 RUN chown -R www-data:www-data ${APP_DIR}
 RUN chown -R www-data:www-data ${CALCCORE_DIR}
-RUN chown -R www-data:www-data /tmp/spreadsheets
+RUN chown -R www-data:www-data /tmp/uploads
 RUN chown -R www-data:www-data /tmp/data
 
 RUN chmod 777 ${APP_DIR}/start.sh
 
 USER www-data
 WORKDIR ${APP_DIR}
-
+ENV UPLOAD_DIR /tmp/uploads
+ENV DATA_DIR /tmp/data
 EXPOSE 3000
 
 # RUN
