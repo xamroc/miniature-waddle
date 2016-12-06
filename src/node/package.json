@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "spec": "find ./controllers -name '*.spec.js' | xargs ./node_modules/mocha/bin/_mocha -R spec --report html"
   },
   "keywords": [],
   "author": "",
