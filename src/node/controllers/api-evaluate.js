@@ -1,8 +1,8 @@
 'use strict'
 
-const _ = require('lodash')
+// const _ = require('lodash')
 const formidable = require('koa-formidable')
-const DataTransform = require("node-json-transform").DataTransform
+// const DataTransform = require('node-json-transform').DataTransform
 const zmq = require('zmq')
 
 var reqSock = zmq.socket('req')
@@ -15,7 +15,7 @@ module.exports = function * () {
 
   try {
     let results = yield new Promise(resolve => {
-      reqSock.on('message', function(msg) { resolve(JSON.parse(msg)) })
+      reqSock.on('message', function (msg) { resolve(JSON.parse(msg)) })
       reqSock.send(JSON.stringify(inputOverride))
     })
 
@@ -25,6 +25,6 @@ module.exports = function * () {
   }
 }
 
-process.on('SIGINT', function() {
-  reqSock.close();
-});
+process.on('SIGINT', function () {
+  reqSock.close()
+})

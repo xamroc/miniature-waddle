@@ -2,7 +2,7 @@
 
 const app = module.exports = require('koa')()
 const router = require('koa-router')()
-const path = require('path')
+// const path = require('path')
 
 const apiDetails = require('./controllers/api-details')
 const apiEvaluate = require('./controllers/api-evaluate')
@@ -26,6 +26,6 @@ app.listen(port, () => {
   console.log('Server listening on port ' + port)
 })
 
-process.on('SIGINT', function() {
-  reqSock.close();
-});
+process.on('SIGINT', function () {
+  reqSock.close()
+})

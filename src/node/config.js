@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const path = require('path')
-const nconf = require('nconf');
+// const path = require('path')
+const nconf = require('nconf')
 
 // Setup nconf to use (in-order):
 //   1. Command-line arguments
@@ -12,4 +12,4 @@ module.exports = nconf.defaults({
 
   root: __dirname
 
-});
+})
