@@ -1,12 +1,9 @@
 'use strict'
 
 const process = require('process')
-
-const _ = require('lodash')
-const formidable = require('koa-formidable')
 const DataTransform = require("node-json-transform").DataTransform
 const zmq = require('zmq')
-const dataDir = process.env.DATA_DIR || "./data"
+const dataDir = process.env.DATA_DIR || "../data"
 
 module.exports = function * () {
 
