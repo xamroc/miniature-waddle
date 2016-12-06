@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "standard || true",
     "spec": "find ./controllers -name '*.spec.js' | xargs ./node_modules/mocha/bin/_mocha -R spec --report html"
   },
   "keywords": [],
   "author": "",
   "dependencies": {
+    "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "koa": "^1.2.4",
     "koa-formidable": "^1.0.0",
@@ -23,6 +26,9 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.6",
+    "supertest": "^2.0.1",
+    "standard": "^8.6.0"
   }
 }

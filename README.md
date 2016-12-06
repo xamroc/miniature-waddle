@@ -19,6 +19,13 @@ docker run -p 3000:3000 -d hsce:0.1
 
 Nothing is persisted.
 
+### Git Hooks
+Be sure to symlink JS lint
+
+```
+ln -s -f src/node/hooks/pre-commit .git/hooks/pre-commit
+```
+
 ### Known Issues
 * **At the moment this repo only works with the embedded spreadsheet "Testfilev2.xlsx"**
 
