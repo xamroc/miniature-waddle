@@ -23,7 +23,7 @@ Nothing is persisted.
 Be sure to symlink JS lint
 
 ```
-ln -s -f src/node/hooks/post-commit .git/hooks/post-commit
+ln -s -f src/node/hooks/pre-commit .git/hooks/pre-commit
 ```
 
 ### Known Issues
